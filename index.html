@@ -84,6 +84,9 @@ html{scroll-behavior:smooth}
   #sticky-nav>a img{width:24px !important;height:24px !important}
   .nav-links{gap:12px !important}
   #hero h1{font-size:30px !important}
+  /* 32px runs this heading to 5 lines on a phone; 28px gets it to 4.
+     3 lines would need 22px, which undercuts the other section headings. */
+  #approach h2{font-size:28px !important}
 }
 </style>
 </helmet>
@@ -144,7 +147,7 @@ html{scroll-behavior:smooth}
   <div style="max-width:1200px;margin:0 auto;display:grid;gap:clamp(48px,7vh,80px)">
     <div data-reveal="" style="text-align:center;display:grid;gap:28px;justify-items:center">
       <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884">Who we are</div>
-      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.4vw,68px);max-width:20ch;text-wrap:balance">We are a private family office based in Singapore</h2>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.4vw,68px);max-width:24ch;text-wrap:balance">We are a private family office based in Singapore</h2>
     </div>
     <div class="about-cols" style="display:flex;gap:clamp(32px,6vw,90px);flex-wrap:wrap;justify-content:center">
       <p data-reveal="" data-delay="100" style="margin:0;flex:1;min-width:260px;max-width:44ch;font-size:16px;line-height:1.65;text-align:justify;color:rgba(244,241,234,0.92)">G3 Infiniti exists to serve one family. We hold no outside capital and seek no clients. Our work is deliberately quiet: preserving what has been built, and preparing it for the hands that follow.</p><!-- sign-off: single-family positioning copy -->
@@ -164,9 +167,9 @@ html{scroll-behavior:smooth}
   <svg aria-hidden="true" width="640" height="640" viewBox="0 0 640 640" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);max-width:92vw;pointer-events:none">
     <circle id="approach-circle" cx="320" cy="320" r="308" fill="none" stroke="rgba(214,184,132,0.5)" stroke-width="1" transform="rotate(-90 320 320)"></circle>
   </svg>
-  <div style="position:relative;max-width:900px;margin:0 auto;text-align:center;display:grid;gap:30px;justify-items:center">
+  <div style="position:relative;max-width:1040px;margin:0 auto;text-align:center;display:grid;gap:30px;justify-items:center">
     <div data-reveal="" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#8a6d3b">Our approach</div>
-    <h2 data-reveal="" data-delay="120" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(32px,4.8vw,72px);text-wrap:balance">We believe permanence comes from patience, governance and alignment</h2>
+    <h2 data-reveal="" data-delay="120" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(32px,4.4vw,64px);max-width:32ch;text-wrap:balance">We believe permanence comes from patience, governance and alignment</h2>
     <p data-reveal="" data-delay="260" style="margin:0;max-width:52ch;font-size:16px;line-height:1.65;color:rgba(11,38,37,0.85)">Decisions are made deliberately, held long, and reviewed with care. Structure does the work that urgency cannot.</p><!-- sign-off: approach copy -->
   </div>
 </section>
