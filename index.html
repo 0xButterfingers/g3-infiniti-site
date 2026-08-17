@@ -23,12 +23,71 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+/* ===== Responsive adaptation (added for mobile) ===== */
+html{-webkit-text-size-adjust:100%}
+img,svg{max-width:100%}
+/* image-slot's shadow root sets aspect-ratio:3/2, so with the wrapper's fixed
+   height it claims an intrinsic width of height x 1.5 (658px at 52vh). That
+   blows out the grid track on any narrow viewport, so let it just fill the
+   wrapper, which already defines both dimensions. */
+image-slot{display:block;max-width:100%;min-width:0}
+#about figure image-slot{aspect-ratio:auto !important;width:100% !important;height:100% !important}
+#hero{min-height:100svh !important}
+#hero>div:last-child{min-height:100svh !important}
+
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+@keyframes scrollNudge{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(7px);opacity:1}}
+.hero-scroll{display:none}
+
+@media (max-width:768px){
+  /* the rotating badge is hidden on phones; this arrow is its replacement */
+  .hero-scroll{display:flex !important;justify-content:center;padding-top:26px;animation:scrollNudge 2.4s ease-in-out infinite}
+
+  /* grid/flex children default to min-width:auto, which forces tracks wider
+     than the phone viewport; collapse that so sections can actually shrink */
+  main section>div>*,main section>div,footer>div>*{min-width:0 !important}
+
+  #sticky-nav{padding:10px 16px !important;gap:6px 14px !important;justify-content:center !important;flex-wrap:wrap !important}
+  #sticky-nav>a{font-size:14px !important;letter-spacing:.16em !important;gap:8px !important}
+  .nav-links{gap:14px !important;justify-content:center !important}
+  .nav-links>a{font-size:9px !important;letter-spacing:.12em !important;padding:6px 0 !important}
+
+  .hero-top{flex-direction:column !important;align-items:center !important;gap:18px !important}
+  .hero-brand{order:-1;flex:0 0 auto !important;min-width:0 !important}
+  .hero-nav{justify-content:center !important;gap:20px !important}
+  /* on phones the hero CTA and the rotating scroll cue both land awkwardly;
+     drop them -- Contact is still reachable from both navs */
+  .hero-cta{display:none !important}
+  .hero-cue{display:none !important}
+
+  .hero-mid{flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;gap:34px !important;text-align:center}
+  .hero-lines{justify-items:center !important;max-width:none !important}
+
+  #about figure>div{height:clamp(240px,34vh,380px) !important}
+
+  #hero h1{font-size:clamp(30px,7.8vw,46px) !important;text-align:center}
+  #hero h1 br{display:none}
+
+  .about-cols{flex-direction:column !important;gap:26px !important}
+  .about-cols>p{min-width:0 !important;max-width:none !important;hyphens:auto}
+
+  .principle-grid>div{border-right:1px solid rgba(244,241,234,0.14);border-bottom:1px solid rgba(244,241,234,0.14);padding:28px 22px !important}
+}
+
+@media (max-width:420px){
+  #sticky-nav>a{font-size:0 !important}
+  #sticky-nav>a img{width:24px !important;height:24px !important}
+  .nav-links{gap:12px !important}
+  #hero h1{font-size:30px !important}
+}
 </style>
 </helmet>
 
 <nav id="sticky-nav" aria-label="Site" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;background:rgba(11,38,37,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(214,184,132,0.25);transform:translateY(-100%);transition:transform .5s ease">
   <a href="#hero" onClick="{{ navClick }}" style="display:flex;align-items:center;gap:12px;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:18px;letter-spacing:.28em;color:#f4f1ea"><img src="assets/g3-mark.png" alt="" style="width:22px;height:22px">G3 INFINITI</a>
-  <div style="display:flex;gap:28px;flex-wrap:wrap">
+  <div class="nav-links" style="display:flex;gap:28px;flex-wrap:wrap">
     <a href="#about" data-navlink="about" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">About</a>
     <a href="#approach" data-navlink="approach" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">Approach</a>
     <a href="#principles" data-navlink="principles" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">Principles</a>
@@ -40,18 +99,18 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
   <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position:absolute;inset:-6%;width:112%;height:112%;filter:blur(34px) saturate(1.1)"></canvas>
   <div aria-hidden="true" style="position:absolute;inset:0;background:#0b2625;opacity:{{ overlayOpacity }}"></div>
   <div style="position:relative;z-index:2;min-height:100vh;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;padding:28px clamp(20px,4vw,48px) clamp(28px,5vh,56px)">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;animation:fadeIn 1.4s .9s ease both">
-      <nav aria-label="Primary" style="display:flex;gap:26px;flex-wrap:wrap">
+    <div class="hero-top" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;animation:fadeIn 1.4s .9s ease both">
+      <nav aria-label="Primary" class="hero-nav" style="display:flex;gap:26px;flex-wrap:wrap">
         <a href="#about" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">About</a>
         <a href="#approach" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">Approach</a>
         <a href="#principles" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">Principles</a>
         <a href="#contact" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">Contact</a>
       </nav>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:180px"><img src="assets/g3-mark.png" alt="G3 Infiniti mark" style="width:30px;height:30px"><span style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2vw,22px);letter-spacing:.3em;color:#f4f1ea">G3 INFINITI</span></div>
-      <a href="#contact" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#f4f1ea;border:1px solid rgba(244,241,234,0.55);border-radius:999px;padding:14px 26px;transition:background .35s ease,color .35s ease,border-color .35s ease" style-hover="background:#f4f1ea;color:#0b2625;border-color:#f4f1ea">Get in touch</a>
+      <div class="hero-brand" style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:180px"><img src="assets/g3-mark.png" alt="G3 Infiniti mark" style="width:30px;height:30px"><span style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2vw,22px);letter-spacing:.3em;color:#f4f1ea">G3 INFINITI</span></div>
+      <a href="#contact" class="hero-cta" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#f4f1ea;border:1px solid rgba(244,241,234,0.55);border-radius:999px;padding:14px 26px;transition:background .35s ease,color .35s ease,border-color .35s ease" style-hover="background:#f4f1ea;color:#0b2625;border-color:#f4f1ea">Get in touch</a>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-top:clamp(32px,7vh,80px);gap:24px;flex-wrap:wrap">
-      <div style="animation:fadeIn 1.4s 1.2s ease both;display:grid;gap:14px;max-width:320px">
+    <div class="hero-mid" style="display:flex;justify-content:space-between;align-items:flex-start;padding-top:clamp(32px,7vh,80px);gap:24px;flex-wrap:wrap">
+      <div class="hero-lines" style="animation:fadeIn 1.4s 1.2s ease both;display:grid;gap:14px;max-width:320px">
         <img src="assets/g3-mark.png" alt="" style="width:36px;height:36px">
         <div style="display:grid;gap:6px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;line-height:1.8;color:rgba(244,241,234,0.9)">
           <span>The private office of one family</span><!-- sign-off: positioning lines -->
@@ -60,7 +119,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
         </div>
         <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884;margin-top:10px">Singapore</div>
       </div>
-      <div style="animation:fadeIn 1.4s 1.5s ease both;display:{{ cueDisplay }}">
+      <div class="hero-cue" style="animation:fadeIn 1.4s 1.5s ease both;display:{{ cueDisplay }}">
         <svg width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Scroll down to learn more" style="animation:spin 42s linear infinite">
           <circle cx="64" cy="64" r="62" fill="none" stroke="rgba(214,184,132,0.55)" stroke-width="1"></circle>
           <path id="cuepath" d="M 64 20 a 44 44 0 1 1 -0.01 0" fill="none"></path>
@@ -68,7 +127,12 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
         </svg>
       </div>
     </div>
-    <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.05;letter-spacing:.015em;font-size:clamp(36px,5.9vw,110px);animation:heroUp 1.3s .25s ease both;text-wrap:balance">Stewarding family capital<br>across generations</h1>
+    <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.05;letter-spacing:.015em;font-size:clamp(36px,5.9vw,110px);animation:heroUp 1.3s .25s ease both;text-wrap:balance">Stewarding family capital <br>across generations</h1>
+    <a href="#about" class="hero-scroll" aria-label="Scroll to content">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 4.5v14m0 0l-6.2-6.2M12 18.5l6.2-6.2" stroke="#d6b884" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </a>
   </div>
 </header>
 
@@ -77,9 +141,9 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
   <div style="max-width:1200px;margin:0 auto;display:grid;gap:clamp(48px,7vh,80px)">
     <div data-reveal="" style="text-align:center;display:grid;gap:28px;justify-items:center">
       <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884">Who we are</div>
-      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.4vw,68px);max-width:20ch;text-wrap:balance">We are a private single family office based in Singapore</h2>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.4vw,68px);max-width:20ch;text-wrap:balance">We are a private family office based in Singapore</h2>
     </div>
-    <div style="display:flex;gap:clamp(32px,6vw,90px);flex-wrap:wrap;justify-content:center">
+    <div class="about-cols" style="display:flex;gap:clamp(32px,6vw,90px);flex-wrap:wrap;justify-content:center">
       <p data-reveal="" data-delay="100" style="margin:0;flex:1;min-width:260px;max-width:44ch;font-size:16px;line-height:1.65;text-align:justify;color:rgba(244,241,234,0.92)">G3 Infiniti exists to serve one family. We hold no outside capital and seek no clients. Our work is deliberately quiet: preserving what has been built, and preparing it for the hands that follow.</p><!-- sign-off: single-family positioning copy -->
       <p data-reveal="" data-delay="220" style="margin:0;flex:1;min-width:260px;max-width:44ch;font-size:16px;line-height:1.65;text-align:justify;color:rgba(244,241,234,0.92)">From Singapore, we look after the family’s investments, governance and practical affairs — patiently, and with permanence as the measure of every decision.</p>
     </div>
@@ -110,7 +174,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
       <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884">Principles</div>
       <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.2vw,64px);text-wrap:balance">Four commitments, held in practice</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));border-top:1px solid rgba(244,241,234,0.14)">
+    <div class="principle-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));border-top:1px solid rgba(244,241,234,0.14)">
       <div data-reveal="" data-delay="0" style="border-left:1px solid rgba(244,241,234,0.14);padding:36px 28px;display:grid;gap:18px;align-content:start">
         <div style="font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.2em;color:#d6b884">01</div>
         <div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase">Stewardship</div>
@@ -172,7 +236,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3p
       <div style="display:grid;gap:14px;justify-items:start">
         <img src="assets/g3-mark.png" alt="G3 Infiniti mark" style="width:40px;height:40px">
         <div style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:.3em">G3 INFINITI</div>
-        <div style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(244,241,234,0.6)">A private single family office</div>
+        <div style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(244,241,234,0.6)">A private family office</div>
       </div>
       
     </div>
