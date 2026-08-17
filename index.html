@@ -86,6 +86,16 @@ html{scroll-behavior:smooth}
 @keyframes scrollNudge{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(7px);opacity:1}}
 .hero-scroll{display:none}
 
+/* The hero top bar used justify-content:space-between, which centres the
+   wordmark in the gap between the nav (349px) and the CTA (152px) rather than
+   on the page -- half their difference, 99px, off to the right. Equal 1fr side
+   columns centre it against the page. Stated unconditionally, mobile-last,
+   to match the rest of this stylesheet; the phone block below overrides it. */
+.hero-top{display:grid !important;grid-template-columns:1fr auto 1fr;align-items:center}
+.hero-nav{justify-self:start}
+.hero-brand{justify-self:center;min-width:0 !important}
+.hero-cta{justify-self:end}
+
 @media (max-width:768px){
   /* the rotating badge is hidden on phones; this arrow is its replacement */
   .hero-scroll{display:flex !important;justify-content:center;padding-top:26px;animation:scrollNudge 2.4s ease-in-out infinite}
@@ -99,9 +109,9 @@ html{scroll-behavior:smooth}
   .nav-links{gap:14px !important;justify-content:center !important}
   .nav-links>a{font-size:9px !important;letter-spacing:.12em !important;padding:6px 0 !important}
 
-  .hero-top{flex-direction:column !important;align-items:center !important;gap:18px !important}
-  .hero-brand{order:-1;flex:0 0 auto !important;min-width:0 !important}
-  .hero-nav{justify-content:center !important;gap:20px !important}
+  .hero-top{grid-template-columns:1fr !important;justify-items:center !important;gap:18px !important}
+  .hero-brand{order:-1;justify-self:center !important;min-width:0 !important}
+  .hero-nav{justify-self:center !important;justify-content:center !important;gap:20px !important}
   /* on phones the hero CTA and the rotating scroll cue both land awkwardly;
      drop them -- Contact is still reachable from both navs */
   .hero-cta{display:none !important}
