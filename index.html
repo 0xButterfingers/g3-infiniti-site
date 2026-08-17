@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#0b2625;color:#f4f1ea;font-family:Inter,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#f4f1ea;text-decoration:none}
+a:hover{color:#d6b884}
+a:focus-visible,button:focus-visible{outline:2px solid #d6b884;outline-offset:3px}
+::selection{background:#d6b884;color:#0b2625}
+@keyframes heroUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+
+<nav id="sticky-nav" aria-label="Site" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 40px;background:rgba(11,38,37,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(214,184,132,0.25);transform:translateY(-100%);transition:transform .5s ease">
+  <a href="#hero" onClick="{{ navClick }}" style="display:flex;align-items:center;gap:12px;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:18px;letter-spacing:.28em;color:#f4f1ea"><img src="assets/g3-mark.png" alt="" style="width:22px;height:22px">G3 INFINITI</a>
+  <div style="display:flex;gap:28px;flex-wrap:wrap">
+    <a href="#about" data-navlink="about" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">About</a>
+    <a href="#approach" data-navlink="approach" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">Approach</a>
+    <a href="#principles" data-navlink="principles" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">Principles</a>
+    <a href="#contact" data-navlink="contact" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:12px 0">Contact</a>
+  </div>
+</nav>
+
+<header id="hero" data-screen-label="Hero" style="position:relative;min-height:100vh;overflow:hidden;background:#0b2625">
+  <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position:absolute;inset:-6%;width:112%;height:112%;filter:blur(34px) saturate(1.1)"></canvas>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:#0b2625;opacity:{{ overlayOpacity }}"></div>
+  <div style="position:relative;z-index:2;min-height:100vh;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;padding:28px clamp(20px,4vw,48px) clamp(28px,5vh,56px)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;animation:fadeIn 1.4s .9s ease both">
+      <nav aria-label="Primary" style="display:flex;gap:26px;flex-wrap:wrap">
+        <a href="#about" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">About</a>
+        <a href="#approach" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">Approach</a>
+        <a href="#principles" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">Principles</a>
+        <a href="#contact" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f4f1ea;padding:14px 0;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left calc(100% - 8px);background-size:0% 1px;transition:background-size .35s ease,color .3s ease" style-hover="background-size:100% 1px">Contact</a>
+      </nav>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:180px"><img src="assets/g3-mark.png" alt="G3 Infiniti mark" style="width:30px;height:30px"><span style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2vw,22px);letter-spacing:.3em;color:#f4f1ea">G3 INFINITI</span></div>
+      <a href="#contact" onClick="{{ navClick }}" style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#f4f1ea;border:1px solid rgba(244,241,234,0.55);border-radius:999px;padding:14px 26px;transition:background .35s ease,color .35s ease,border-color .35s ease" style-hover="background:#f4f1ea;color:#0b2625;border-color:#f4f1ea">Get in touch</a>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-top:clamp(32px,7vh,80px);gap:24px;flex-wrap:wrap">
+      <div style="animation:fadeIn 1.4s 1.2s ease both;display:grid;gap:14px;max-width:320px">
+        <img src="assets/g3-mark.png" alt="" style="width:36px;height:36px">
+        <div style="display:grid;gap:6px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;line-height:1.8;color:rgba(244,241,234,0.9)">
+          <span>The private office of one family</span><!-- sign-off: positioning lines -->
+          <span>In service of its capital</span>
+          <span>Built for the long term</span>
+        </div>
+        <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884;margin-top:10px">Singapore</div>
+      </div>
+      <div style="animation:fadeIn 1.4s 1.5s ease both;display:{{ cueDisplay }}">
+        <svg width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Scroll down to learn more" style="animation:spin 42s linear infinite">
+          <circle cx="64" cy="64" r="62" fill="none" stroke="rgba(214,184,132,0.55)" stroke-width="1"></circle>
+          <path id="cuepath" d="M 64 20 a 44 44 0 1 1 -0.01 0" fill="none"></path>
+          <text style="font-family:Inter,sans-serif;font-size:9.5px;letter-spacing:3.5px;fill:#f4f1ea"><textPath href="#cuepath">SCROLL DOWN TO LEARN MORE ·&nbsp;&nbsp;</textPath></text>
+        </svg>
+      </div>
+    </div>
+    <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.05;letter-spacing:.015em;font-size:clamp(36px,5.9vw,110px);animation:heroUp 1.3s .25s ease both;text-wrap:balance">Stewarding family capital<br>across generations</h1>
+  </div>
+</header>
+
+<main>
+<section id="about" data-screen-label="Who we are" style="background:linear-gradient(180deg,#0b2625 0%,#0e3a32 32%);color:#f4f1ea;padding:clamp(90px,14vh,160px) clamp(20px,4vw,48px)">
+  <div style="max-width:1200px;margin:0 auto;display:grid;gap:clamp(48px,7vh,80px)">
+    <div data-reveal="" style="text-align:center;display:grid;gap:28px;justify-items:center">
+      <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884">Who we are</div>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.4vw,68px);max-width:20ch;text-wrap:balance">We are a private single family office based in Singapore</h2>
+    </div>
+    <div style="display:flex;gap:clamp(32px,6vw,90px);flex-wrap:wrap;justify-content:center">
+      <p data-reveal="" data-delay="100" style="margin:0;flex:1;min-width:260px;max-width:44ch;font-size:16px;line-height:1.65;text-align:justify;color:rgba(244,241,234,0.92)">G3 Infiniti exists to serve one family. We hold no outside capital and seek no clients. Our work is deliberately quiet: preserving what has been built, and preparing it for the hands that follow.</p><!-- sign-off: single-family positioning copy -->
+      <p data-reveal="" data-delay="220" style="margin:0;flex:1;min-width:260px;max-width:44ch;font-size:16px;line-height:1.65;text-align:justify;color:rgba(244,241,234,0.92)">From Singapore, we look after the family’s investments, governance and practical affairs — patiently, and with permanence as the measure of every decision.</p>
+    </div>
+    <figure data-reveal="" data-delay="120" style="margin:0;display:grid;gap:14px">
+      <div style="position:relative;width:100%;height:clamp(280px,52vh,560px)">
+        <image-slot id="about-photo" shape="rect" placeholder="Architectural photograph — muted, duotoned toward dark green"></image-slot>
+        <div aria-hidden="true" style="position:absolute;inset:0;background:#0b2625;opacity:.28;mix-blend-mode:color;pointer-events:none"></div>
+      </div>
+      <figcaption style="display:flex;align-items:baseline;gap:16px;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(244,241,234,0.7)"><span style="flex:0 0 48px;border-top:1px solid #d6b884;transform:translateY(-3px)"></span>Built to be held, not traded</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="approach" data-screen-label="Our approach" style="position:relative;background:#f4f1ea;color:#0b2625;padding:clamp(110px,18vh,200px) clamp(20px,4vw,48px);overflow:hidden">
+  <svg aria-hidden="true" width="640" height="640" viewBox="0 0 640 640" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);max-width:92vw;pointer-events:none">
+    <circle id="approach-circle" cx="320" cy="320" r="308" fill="none" stroke="rgba(214,184,132,0.5)" stroke-width="1" transform="rotate(-90 320 320)"></circle>
+  </svg>
+  <div style="position:relative;max-width:900px;margin:0 auto;text-align:center;display:grid;gap:30px;justify-items:center">
+    <div data-reveal="" style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#8a6d3b">Our approach</div>
+    <h2 data-reveal="" data-delay="120" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(32px,4.8vw,72px);text-wrap:balance">We believe permanence comes from patience, governance and alignment</h2>
+    <p data-reveal="" data-delay="260" style="margin:0;max-width:52ch;font-size:16px;line-height:1.65;color:rgba(11,38,37,0.85)">Decisions are made deliberately, held long, and reviewed with care. Structure does the work that urgency cannot.</p><!-- sign-off: approach copy -->
+  </div>
+</section>
+
+<section id="principles" data-screen-label="Principles" style="background:#0b2625;color:#f4f1ea;padding:clamp(90px,14vh,160px) clamp(20px,4vw,48px)">
+  <div style="max-width:1240px;margin:0 auto;display:grid;gap:clamp(56px,8vh,90px)">
+    <div data-reveal="" style="text-align:center;display:grid;gap:28px;justify-items:center">
+      <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#d6b884">Principles</div>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(30px,4.2vw,64px);text-wrap:balance">Four commitments, held in practice</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));border-top:1px solid rgba(244,241,234,0.14)">
+      <div data-reveal="" data-delay="0" style="border-left:1px solid rgba(244,241,234,0.14);padding:36px 28px;display:grid;gap:18px;align-content:start">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.2em;color:#d6b884">01</div>
+        <div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase">Stewardship</div>
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="22" fill="none" stroke="#d6b884" stroke-width="1" opacity="0.35"></circle></svg>
+        <div style="display:grid;gap:10px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;line-height:1.6;color:rgba(244,241,234,0.72)">
+          <span>Capital held in trust</span>
+          <span>Preservation before growth</span>
+          <span>Decisions the family can explain</span>
+        </div>
+      </div>
+      <div data-reveal="" data-delay="140" style="border-left:1px solid rgba(244,241,234,0.14);padding:36px 28px;display:grid;gap:18px;align-content:start">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.2em;color:#d6b884">02</div>
+        <div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase">Long horizon</div>
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56"><line x1="8" y1="18" x2="48" y2="18" stroke="#d6b884" stroke-width="1" opacity="0.35"></line><line x1="8" y1="28" x2="48" y2="28" stroke="#d6b884" stroke-width="1" opacity="0.35"></line><line x1="8" y1="38" x2="48" y2="38" stroke="#d6b884" stroke-width="1" opacity="0.35"></line></svg>
+        <div style="display:grid;gap:10px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;line-height:1.6;color:rgba(244,241,234,0.72)">
+          <span>Measured in decades</span>
+          <span>No external clocks</span>
+          <span>Compounding left alone</span>
+        </div>
+      </div>
+      <div data-reveal="" data-delay="280" style="border-left:1px solid rgba(244,241,234,0.14);padding:36px 28px;display:grid;gap:18px;align-content:start">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.2em;color:#d6b884">03</div>
+        <div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase">Discretion</div>
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56"><rect x="13" y="13" width="30" height="30" fill="none" stroke="#d6b884" stroke-width="1" opacity="0.35" transform="rotate(45 28 28)"></rect></svg>
+        <div style="display:grid;gap:10px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;line-height:1.6;color:rgba(244,241,234,0.72)">
+          <span>Private by default</span>
+          <span>No public commentary</span>
+          <span>Counsel kept in confidence</span>
+        </div>
+      </div>
+      <div data-reveal="" data-delay="420" style="border-left:1px solid rgba(244,241,234,0.14);border-right:1px solid rgba(244,241,234,0.14);padding:36px 28px;display:grid;gap:18px;align-content:start">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.2em;color:#d6b884">04</div>
+        <div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase">Alignment</div>
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56"><polygon points="28,9 47,45 9,45" fill="none" stroke="#d6b884" stroke-width="1" opacity="0.35"></polygon></svg>
+        <div style="display:grid;gap:10px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;line-height:1.6;color:rgba(244,241,234,0.72)">
+          <span>One family, one balance sheet</span>
+          <span>Interests never divided</span>
+          <span>Governance before opportunity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" data-screen-label="Contact" style="background:#f4f1ea;color:#0b2625;padding:clamp(90px,14vh,160px) clamp(20px,4vw,48px) clamp(110px,16vh,180px)">
+  <div style="max-width:760px;margin:0 auto;text-align:center;display:grid;gap:26px;justify-items:center">
+    <div data-reveal="" aria-hidden="true" style="display:grid;justify-items:center;gap:10px"><span style="width:1px;height:88px;background:#d6b884;display:block"></span></div>
+    <h2 data-reveal="" data-delay="120" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;text-transform:uppercase;line-height:1.08;font-size:clamp(32px,4.6vw,68px);text-wrap:balance">It begins with a conversation</h2>
+    <p data-reveal="" data-delay="240" style="margin:0;max-width:48ch;font-size:16px;line-height:1.65;color:rgba(11,38,37,0.85)">There is no form. Write to us directly — a considered note always finds a reader.</p><!-- sign-off: contact copy -->
+    <a data-reveal="" data-delay="340" href="mailto:hello@g3infiniti.com" style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.4vw,44px);color:#0b2625;padding:8px 2px;background-image:linear-gradient(#d6b884,#d6b884);background-repeat:no-repeat;background-position:left 100%;background-size:100% 1px;transition:background-size .4s ease,color .3s ease" style-hover="background-size:100% 3px;color:#0B5220">hello@g3infiniti.com</a>
+    <p data-reveal="" data-delay="420" style="margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(11,38,37,0.55)">Your note is read by a person and kept in confidence</p>
+  </div>
+</section>
+</main>
+
+<footer data-screen-label="Footer" style="background:#0b2625;color:#f4f1ea;padding:clamp(56px,9vh,90px) clamp(20px,4vw,48px) 40px">
+  <div style="max-width:1240px;margin:0 auto;display:grid;gap:44px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap">
+      <div style="display:grid;gap:14px;justify-items:start">
+        <img src="assets/g3-mark.png" alt="G3 Infiniti mark" style="width:40px;height:40px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:.3em">G3 INFINITI</div>
+        <div style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(244,241,234,0.6)">A private single family office</div>
+      </div>
+      
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(244,241,234,0.14);padding-top:24px">
+      <img src="assets/g3-mark.png" alt="" style="width:24px;height:24px">
+      <span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,241,234,0.5)">© 2026 G3 Infiniti. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;overlayOpacity&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.38, &quot;min&quot;: 0.15, &quot;max&quot;: 0.6, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;motionSpeed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.25, &quot;max&quot;: 2, &quot;step&quot;: 0.25, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Hero&quot;},
+  &quot;showScrollCue&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Hero&quot;}
+}">
+class Component extends DCLogic {
+  canvasRef = React.createRef();
+  componentDidMount() {
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.startCanvas();
+    this.setupReveals();
+    this.setupNav();
+    this.setupCircleDraw();
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    if (this.io) this.io.disconnect();
+    if (this.secIO) this.secIO.disconnect();
+    if (this.circIO) this.circIO.disconnect();
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+  }
+  startCanvas() {
+    const cv = this.canvasRef.current; if (!cv) return;
+    const W = 420, H = 236; cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d');
+    const orbs = [
+      { x: .25, y: .42, r: .52, c: 'rgba(14,58,50,0.85)', sx: .12, sy: .08, p: 0 },
+      { x: .75, y: .28, r: .44, c: 'rgba(9,58,55,0.9)', sx: .10, sy: .12, p: 2 },
+      { x: .60, y: .78, r: .56, c: 'rgba(18,74,62,0.55)', sx: .14, sy: .07, p: 4 },
+      { x: .40, y: .18, r: .30, c: 'rgba(214,184,132,0.10)', sx: .16, sy: .10, p: 1.3 },
+      { x: .88, y: .70, r: .34, c: 'rgba(214,184,132,0.07)', sx: .09, sy: .13, p: 3.1 }
+    ];
+    let t = Math.random() * 100;
+    const draw = () => {
+      const g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#0a2423'); g.addColorStop(1, '#051413');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      for (const o of orbs) {
+        const x = (o.x + Math.sin(t * o.sx + o.p) * .13) * W;
+        const y = (o.y + Math.cos(t * o.sy + o.p) * .10) * H;
+        const r = o.r * W * (1 + Math.sin(t * .05 + o.p) * .08);
+        const rg = ctx.createRadialGradient(x, y, 0, x, y, r);
+        rg.addColorStop(0, o.c); rg.addColorStop(1, 'rgba(5,20,19,0)');
+        ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+      }
+    };
+    if (this.reduced) { draw(); return; }
+    const loop = () => {
+      t += 0.016 * (this.props.motionSpeed ?? 1);
+      draw();
+      this.raf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+  setupReveals() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (this.reduced || !('IntersectionObserver' in window)) return;
+    els.forEach(el => {
+      const d = el.dataset.delay || 0;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity .9s ease ' + d + 'ms, transform .9s ease ' + d + 'ms';
+    });
+    this.io = new IntersectionObserver(en => {
+      en.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          this.io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .12 });
+    els.forEach(el => this.io.observe(el));
+  }
+  setupNav() {
+    const bar = document.getElementById('sticky-nav');
+    const hero = document.getElementById('hero');
+    const onScroll = () => {
+      if (!bar) return;
+      const past = window.scrollY > (hero ? hero.offsetHeight - 90 : 600);
+      bar.style.transform = past ? 'translateY(0)' : 'translateY(-100%)';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    this.onScroll = onScroll;
+    this.secIO = new IntersectionObserver(en => {
+      en.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('[data-navlink]').forEach(a => {
+            a.style.color = a.dataset.navlink === e.target.id ? '#d6b884' : '#f4f1ea';
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    ['about', 'approach', 'principles', 'contact'].forEach(id => {
+      const s = document.getElementById(id); if (s) this.secIO.observe(s);
+    });
+  }
+  setupCircleDraw() {
+    const c = document.getElementById('approach-circle'); if (!c) return;
+    if (this.reduced) return;
+    const C = 2 * Math.PI * 308;
+    c.style.strokeDasharray = C;
+    c.style.strokeDashoffset = C;
+    c.style.transition = 'stroke-dashoffset 2.6s ease .2s';
+    this.circIO = new IntersectionObserver(en => {
+      en.forEach(e => {
+        if (e.isIntersecting) { c.style.strokeDashoffset = '0'; this.circIO.disconnect(); }
+      });
+    }, { threshold: .3 });
+    this.circIO.observe(c.closest('svg'));
+  }
+  renderVals() {
+    return {
+      canvasRef: this.canvasRef,
+      overlayOpacity: this.props.overlayOpacity ?? 0.38,
+      cueDisplay: this.props.showScrollCue === false ? 'none' : 'block',
+      navClick: (e) => {
+        const href = e.currentTarget.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const el = document.getElementById(href.slice(1));
+          if (el) window.scrollTo({ top: el.offsetTop, behavior: this.reduced ? 'auto' : 'smooth' });
+        }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
