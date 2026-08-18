@@ -86,6 +86,41 @@ html{scroll-behavior:smooth}
 @keyframes scrollNudge{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(7px);opacity:1}}
 .hero-scroll{display:none}
 
+/* --- hero photograph --- */
+.hero-photo{position:absolute;inset:0;z-index:0;
+  background-image:url('assets/hero-horse.jpg');
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  opacity:.8}
+/* The sky has a bright horizon band that the cream text would disappear into,
+   so a scrim sits above the photo but below the content. Its own layer, not a
+   child of .hero-photo, so the photo's opacity does not weaken it. */
+#hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(11,38,37,.62) 0%,
+    rgba(11,38,37,.30) 32%,
+    rgba(11,38,37,.44) 62%,
+    rgba(11,38,37,.78) 100%)}
+/* A second scrim weighted to the left, where the copy sits. Darkening the
+   whole mid-band enough for the gold "Singapore" would have needed .76 alpha
+   and flattened the horizon glow; this keeps the sky and the horse bright. */
+#hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,
+    rgba(11,38,37,.86) 0%,
+    rgba(11,38,37,.72) 24%,
+    rgba(11,38,37,.24) 48%,
+    rgba(11,38,37,0) 66%)}
+@media (max-width:768px){
+  /* portrait 3:4 crop framed on the horse -- the landscape file lost ~74% of
+     its width to `cover` on a phone viewport */
+  .hero-photo{background-image:url('assets/hero-horse-mobile.jpg');
+    background-position:center}
+  /* the copy is centred on phones, so the left-weighted scrim cannot carry it */
+  #hero::before{background:linear-gradient(180deg,
+    rgba(11,38,37,.30) 0%,
+    rgba(11,38,37,.46) 46%,
+    rgba(11,38,37,.30) 100%)}
+}
+
 /* The hero top bar used justify-content:space-between, which centres the
    wordmark in the gap between the nav (349px) and the CTA (152px) rather than
    on the page -- half their difference, 99px, off to the right. Equal 1fr side
@@ -158,6 +193,7 @@ html{scroll-behavior:smooth}
 
 <header id="hero" data-screen-label="Hero" style="position:relative;min-height:100vh;overflow:hidden;background:#0b2625">
   <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position:absolute;inset:-6%;width:112%;height:112%;filter:blur(34px) saturate(1.1)"></canvas>
+  <div class="hero-photo" aria-hidden="true"></div>
   <div aria-hidden="true" style="position:absolute;inset:0;background:#0b2625;opacity:{{ overlayOpacity }}"></div>
   <div style="position:relative;z-index:2;min-height:100vh;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;padding:28px clamp(20px,4vw,48px) clamp(28px,5vh,56px)">
     <div class="hero-top" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;animation:fadeIn 1.4s .9s ease both">
