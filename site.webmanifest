@@ -1,0 +1,10 @@
+{
+  "name": "G3 Infiniti",
+  "short_name": "G3 Infiniti",
+  "icons": [
+    { "src": "/assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0b2625",
+  "background_color": "#0b2625"
+}
