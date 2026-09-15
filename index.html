@@ -168,6 +168,12 @@ html{scroll-behavior:smooth}
   /* 20ch caps this well short of the column and forces a 4th line */
   #about h2{max-width:none !important}
 
+  /* "Four commitments, guiding every decision" is 40 chars against the old
+     33, so at 30px it wraps to three lines and strands "GUIDING" on its own.
+     Scaling with the viewport keeps the second line inside the column from
+     320px phones up to the breakpoint, so it always sets in two. */
+  #principles h2{font-size:clamp(22px,7vw,32px) !important}
+
   .principle-grid>div{border-right:1px solid rgba(244,241,234,0.14);border-bottom:1px solid rgba(244,241,234,0.14);padding:28px 22px !important}
 }
 
